@@ -130,7 +130,7 @@ describeEmbeddedPostgres("teams catalog install with no caller adapter overrides
 
     const byName = await listAdapterTypesByName(companyId);
     expect(byName.size).toBe(3);
-    const ctoRow = Array.from(byName.values()).find((row) => row.role === "engineering-manager" || row.name === "CTO");
+    const ctoRow = Array.from(byName.values()).find((row) => row.role === "cto" || row.name === "CTO");
     expect(ctoRow?.adapterType).toBe("opencode_local");
     const otherAdapters = Array.from(byName.values())
       .filter((row) => row !== ctoRow)
