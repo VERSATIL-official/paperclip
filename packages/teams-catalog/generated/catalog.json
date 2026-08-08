@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/teams-catalog",
   "packageVersion": "0.1.0",
-  "generatedAt": "2026-06-04T18:03:41.262Z",
+  "generatedAt": "2026-08-08T19:38:56.176Z",
   "teams": [
     {
       "id": "paperclipai:bundled:company-defaults:core-exec-team",
@@ -108,8 +108,8 @@
         {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1449,
-          "sha256": "596e2e9fe08d7368b3b0cfe72c2635ea80444d92a2c0414157bfb0a17773fcaf"
+          "sizeBytes": 1433,
+          "sha256": "c9d1e6b8a2e57e828cb56f5ae640638f36cdfe804bb3d246f25300b9a9cc3bb1"
         },
         {
           "path": "agents/qa/AGENTS.md",
@@ -132,7 +132,7 @@
       ],
       "trustLevel": "markdown_only",
       "compatibility": "compatible",
-      "contentHash": "sha256:0f20e9d56124c1dc90a1e4b128fabd863538bcc935117220f719d9620f7c89f1"
+      "contentHash": "sha256:ea7cfffefff0e182a273a9e5c4ea490cd31e0865d60168579343bdbc8bb1d088"
     },
     {
       "id": "paperclipai:bundled:product:product-design",
@@ -343,8 +343,8 @@
         {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1499,
-          "sha256": "0a1a73ec9e5008056bca0a26325131ded2fcf4c4680a5014ba1e13400b32c173"
+          "sizeBytes": 1483,
+          "sha256": "7ddc303e8f71db9c3f6a261bb05a49185d5087cbc801f52fb7ee4ad85d36ed04"
         },
         {
           "path": "agents/qa/AGENTS.md",
@@ -373,7 +373,7 @@
       ],
       "trustLevel": "assets",
       "compatibility": "compatible",
-      "contentHash": "sha256:74ddeaeb11805835a4a67fc4530b048ab7f8aa1dc7d2b80acea139a933d158d3"
+      "contentHash": "sha256:d3d7a7173fe5921c264190c2d51ff74048c78a9febb625badb148238deef7578"
     },
     {
       "id": "paperclipai:optional:content:content-machine",
@@ -437,8 +437,8 @@
         {
           "path": "agents/content-lead/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 251,
-          "sha256": "6fc2071ff463b6981780d5b40b2c0784cb119900062f8dc40ed372e7b8415bf7"
+          "sizeBytes": 240,
+          "sha256": "7de3609dd6e917dc4f477d5a2154ca8b896eee60ee48985d7cfcb6daf8b896ca"
         },
         {
           "path": "projects/content-operations/PROJECT.md",
@@ -461,7 +461,7 @@
       ],
       "trustLevel": "markdown_only",
       "compatibility": "compatible",
-      "contentHash": "sha256:06822cec5f2b6910cb37ba0ebd5e04ed5c7e34f77225564ddddc2470779cdaa6"
+      "contentHash": "sha256:b36a82d3158643b63c371f7e718792d2a784d76a653034b4e926be8706fa4713"
     }
   ]
 }

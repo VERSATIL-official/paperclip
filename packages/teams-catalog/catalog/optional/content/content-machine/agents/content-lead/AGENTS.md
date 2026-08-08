@@ -2,7 +2,7 @@
 name: Content Lead
 slug: content-lead
 title: Content Lead
-role: content-strategist
+role: general
 reportsTo: null
 skills:
   - content-calendar

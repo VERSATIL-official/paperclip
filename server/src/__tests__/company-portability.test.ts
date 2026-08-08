@@ -1658,6 +1658,123 @@ describe("company portability", () => {
     );
   });
 
+  it("defaults an imported agent's role to general when the package leaves it unset", async () => {
+    const portability = companyPortabilityService({} as any);
+    agentSvc.list.mockResolvedValue([]);
+    agentSvc.create.mockImplementation(async (_companyId: string, input: Record<string, unknown>) => ({
+      id: "agent-imported",
+      name: input.name,
+      role: input.role,
+      adapterType: input.adapterType,
+      adapterConfig: input.adapterConfig,
+      status: input.status,
+    }));
+
+    await portability.importBundle({
+      source: {
+        type: "inline",
+        files: {
+          "COMPANY.md": [
+            "---",
+            "name: Import",
+            "includes:",
+            "  - agents/coder/AGENTS.md",
+            "---",
+            "",
+          ].join("\n"),
+          "agents/coder/AGENTS.md": [
+            "---",
+            "name: Coder",
+            "slug: coder",
+            "kind: agent",
+            "---",
+            "",
+            "# Coder",
+            "",
+          ].join("\n"),
+          ".paperclip.yaml": [
+            "schema: paperclip/v1",
+            "agents:",
+            "  coder:",
+            "    adapter:",
+            "      type: codex_local",
+            "      config: {}",
+            "",
+          ].join("\n"),
+        },
+      },
+      include: {
+        company: false,
+        agents: true,
+        projects: false,
+        issues: false,
+      },
+      target: {
+        mode: "existing_company",
+        companyId: "company-1",
+      },
+      collisionStrategy: "rename",
+    }, "user-1");
+
+    expect(agentSvc.create).toHaveBeenCalledWith("company-1", expect.objectContaining({
+      role: "general",
+    }));
+  });
+
+  it("rejects an imported agent whose declared role is not a recognized AGENT_ROLES value", async () => {
+    const portability = companyPortabilityService({} as any);
+    agentSvc.list.mockResolvedValue([]);
+
+    await expect(portability.importBundle({
+      source: {
+        type: "inline",
+        files: {
+          "COMPANY.md": [
+            "---",
+            "name: Import",
+            "includes:",
+            "  - agents/coder/AGENTS.md",
+            "---",
+            "",
+          ].join("\n"),
+          "agents/coder/AGENTS.md": [
+            "---",
+            "name: Coder",
+            "slug: coder",
+            "kind: agent",
+            'role: "not-a-real-role"',
+            "---",
+            "",
+            "# Coder",
+            "",
+          ].join("\n"),
+          ".paperclip.yaml": [
+            "schema: paperclip/v1",
+            "agents:",
+            "  coder:",
+            "    adapter:",
+            "      type: codex_local",
+            "      config: {}",
+            "",
+          ].join("\n"),
+        },
+      },
+      include: {
+        company: false,
+        agents: true,
+        projects: false,
+        issues: false,
+      },
+      target: {
+        mode: "existing_company",
+        companyId: "company-1",
+      },
+      collisionStrategy: "rename",
+    }, "user-1")).rejects.toThrow(/role/i);
+
+    expect(agentSvc.create).not.toHaveBeenCalled();
+  });
+
   it("imports agent permission grants from package metadata", async () => {
     const portability = companyPortabilityService({} as any);
     agentSvc.list.mockResolvedValue([]);

@@ -55,6 +55,7 @@ import {
   ROUTINE_STATUSES,
   ROUTINE_TRIGGER_KINDS,
   ROUTINE_TRIGGER_SIGNING_MODES,
+  createAgentSchema,
   deriveProjectUrlKey,
   envConfigSchema,
   issueCommentAuthorTypeSchema,
@@ -3112,7 +3113,7 @@ function buildManifestFromPackageFiles(
       name: asString(frontmatter.name) ?? title ?? slug,
       path: agentPath,
       skills: readAgentSkillRefs(frontmatter),
-      role: asString(extension.role) ?? asString(frontmatter.role) ?? "agent",
+      role: asString(extension.role) ?? asString(frontmatter.role) ?? "general",
       title,
       icon: asString(extension.icon),
       capabilities: asString(extension.capabilities),
@@ -3455,6 +3456,14 @@ export function companyPortabilityService(db: Db, storage?: StorageService) {
       throw unprocessable(`Unknown adapter type: ${adapterType}`);
     }
     return adapterType;
+  }
+
+  function assertValidImportedAgentRole(role: string, agentSlug: string): string {
+    const parsed = createAgentSchema.shape.role.safeParse(role);
+    if (!parsed.success) {
+      throw unprocessable(`Agent ${agentSlug} has an unrecognized role: ${role}`);
+    }
+    return parsed.data;
   }
 
   async function assertImportAdapterConfigConstraints(
@@ -5378,7 +5387,7 @@ export function companyPortabilityService(db: Db, storage?: StorageService) {
           );
           const patch = {
             name: planAgent.plannedName,
-            role: manifestAgent.role,
+            role: assertValidImportedAgentRole(manifestAgent.role, manifestAgent.slug),
             title: manifestAgent.title,
             icon: manifestAgent.icon,
             capabilities: manifestAgent.capabilities,

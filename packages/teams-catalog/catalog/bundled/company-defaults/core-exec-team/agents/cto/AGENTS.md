@@ -2,7 +2,7 @@
 name: CTO
 slug: cto
 title: Chief Technology Officer
-role: engineering-manager
+role: cto
 reportsTo: ceo
 skills:
   - github-pr-workflow
